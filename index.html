@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swipe Heart</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('background.png') no-repeat center center fixed;
+      background-size: contain; /* Zmiana na "contain" dla dostosowania */
+      background-color: white; /* Dodanie tła wypełniającego puste miejsca */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden; /* Usunięcie przewijania */
+    }
+
+    .game-area {
+      position: relative;
+      width: 800px;
+      height: 300px;
+      background: white; /* Dodanie białego tła dla obszaru gry */
+      border: 2px solid #ccc; /* Opcjonalnie: obramowanie dla lepszej widoczności */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .character {
+      position: absolute;
+      bottom: 62px;
+    }
+
+    #boy {
+      left: -120px;
+    }
+
+    #girl {
+      right: -120px;
+    }
+
+    #heart {
+      position: absolute;
+      bottom: -725px;
+      left: -85px;
+      cursor: pointer;
+    }
+
+    .character img {
+      width: 250px;
+      height: auto;
+    }
+
+    #heart img {
+      width: 1000px;
+      height: auto;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        justify-content: center;
+        align-items: center;
+      }
+
+      .game-area {
+        transform: scale(0.8); /* Zmniejszenie obszaru gry na mniejszych ekranach */
+        transform-origin: top center;
+      }
+
+      .character img {
+        width: 200px; /* Zmniejszenie rozmiaru postaci na telefonach */
+      }
+
+      #heart img {
+        width: 800px; /* Zmniejszenie serca na telefonach */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="game-area">
+    <div id="boy" class="character">
+      <img src="boy1.png" alt="Boy">
+    </div>
+    <div id="girl" class="character">
+      <img src="girl1.png" alt="Girl">
+    </div>
+    <div id="heart">
+      <img src="heart.png" alt="Heart">
+    </div>
+  </div>
+  <script>
+    // Pobranie elementów
+    const boy = document.getElementById('boy');
+    const girl = document.getElementById('girl');
+    const heart = document.getElementById('heart');
+
+    // Funkcja uruchamiająca ruch
+    heart.addEventListener('click', () => {
+      const heartStyle = window.getComputedStyle(heart);
+      const boyStyle = window.getComputedStyle(boy);
+
+      // Pobranie aktualnych pozycji serca i chłopaka
+      let heartPosition = parseInt(heartStyle.left);
+      let boyPosition = parseInt(boyStyle.left);
+
+      const interval = setInterval(() => {
+        // Przesunięcie serca i postaci chłopaka w prawo
+        heartPosition += 5; // Zwiększone przesunięcie dla szybszego ruchu
+        boyPosition += 5; // Zwiększone przesunięcie dla szybszego ruchu
+        heart.style.left = heartPosition + 'px';
+        boy.style.left = boyPosition + 'px';
+
+        // Sprawdzanie kolizji
+        if (heartPosition >= 600) {
+          clearInterval(interval);
+
+          // Zmiana obrazków
+          document.querySelector('#boy img').src = 'boy2.png';
+          document.querySelector('#girl img').src = 'girl2.png';
+
+          // Wyświetlenie obrazka "muah"
+          const muah = document.createElement('img');
+          muah.src = 'muah.png';
+          muah.alt = 'Muah';
+          muah.style.position = 'absolute';
+          muah.style.top = '30%';
+          muah.style.left = '70%';
+          muah.style.transform = 'translate(-50%, -50%)';
+          muah.style.width = '500px';
+          document.querySelector('.game-area').appendChild(muah);
+
+          // Pozostawienie serca i chłopaka w ostatniej pozycji
+          heart.style.left = heartPosition + 'px';
+          boy.style.left = boyPosition + 'px';
+        }
+      }, 15); // Jeszcze szybsze odświeżanie dla animacji
+    });
+  </script>
+</body>
+</html>
