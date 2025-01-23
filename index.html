@@ -9,7 +9,7 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background: url('background.png') no-repeat center center fixed;
-      background-size: contain; /* Zmiana na "contain" dla dostosowania */
+      background-size: cover; /* Ustawienie pełnego wypełnienia */
       background-color: white; /* Dodanie tła wypełniającego puste miejsca */
       display: flex;
       justify-content: center;
@@ -22,9 +22,6 @@
       position: relative;
       width: 800px;
       height: 300px;
-      background: white; /* Dodanie białego tła dla obszaru gry */
-      border: 2px solid #ccc; /* Opcjonalnie: obramowanie dla lepszej widoczności */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
     .character {
@@ -66,10 +63,19 @@
       .game-area {
         transform: scale(0.8); /* Zmniejszenie obszaru gry na mniejszych ekranach */
         transform-origin: top center;
+        height: 300px;
+      }
+
+      .character {
+        bottom: 42px; /* Dostosowanie pozycji postaci w pionie */
       }
 
       .character img {
         width: 200px; /* Zmniejszenie rozmiaru postaci na telefonach */
+      }
+
+      #heart {
+        bottom: -680px; /* Dostosowanie pozycji serca w pionie */
       }
 
       #heart img {
